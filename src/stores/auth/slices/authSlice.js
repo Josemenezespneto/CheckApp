@@ -1,11 +1,10 @@
-// src/store/slices/authSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import api from "../../../services/api/index";
-
 
 const initialState = {
   user: null,
   token: null,
+  loggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -15,12 +14,14 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
+      state.loggedIn = (Boolean(action.payload.user) && Boolean(action.payload.token)) 
       api.setAuthToken(state.token)
       
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
+      state.loggedIn = false;
       api.setAuthToken(null)
     },
   },

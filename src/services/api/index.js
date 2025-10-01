@@ -16,6 +16,7 @@ class ApiService {
         if (error.response?.status === 401) {
           window.alert("Sessão expirada. Redirecionando para login...");
           window.location.href = "/"; // não faz logout direto aqui
+          localStorage.removeItem('persist:root')
         }
 
         return Promise.reject(error);
