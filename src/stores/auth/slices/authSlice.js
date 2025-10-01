@@ -14,7 +14,7 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
-      state.loggedIn = (Boolean(action.payload.user) && Boolean(action.payload.token)) 
+      state.loggedIn = true;
       api.setAuthToken(state.token)
       
     },

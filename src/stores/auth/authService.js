@@ -19,11 +19,17 @@ const authService = {
       throw error.response?.data || { message: "Erro ao fazer login" };
     }
   },
+  
   isAuthUser: () => {
-   const response = localStorage.getItem('persist:root')
-   const obj = JSON.parse(response);
-   const { loggedIn } = obj;
-   return loggedIn;
+    try {    
+      const response = localStorage.getItem('persist:root')
+      const obj = JSON.parse(response);
+      const { loggedIn } = obj;
+      return loggedIn;
+    } 
+    catch (error) {
+      return false;
+    }
   }
 };
 

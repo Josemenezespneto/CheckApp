@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Perfil from "./views/Perfil.jsx";
 import Login from './views/Login.jsx';
-import authService from "./stores/auth/authService.js";
 import CrohnCDAIForm from "./views/Cdai.jsx";
+import { useSelector } from "react-redux";
 
 const PrivateRoute = ({ children }) => {
-  return authService.isAuthUser() ? children : <Navigate to="/" />;
+  const loggedIn = useSelector((s) => s.auth.loggedIn); // 👈 pega do Redux
+  return loggedIn ? children : <Navigate to="/" replace />;
 };
 
 function AppRoutes() {
