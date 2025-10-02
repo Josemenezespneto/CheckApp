@@ -3,6 +3,7 @@ import Perfil from "./views/Perfil.jsx";
 import Login from './views/Login.jsx';
 import CrohnCDAIForm from "./views/Cdai.jsx";
 import { useSelector } from "react-redux";
+import PacientesView from "./views/Patients.jsx";
 
 const PrivateRoute = ({ children }) => {
   const loggedIn = useSelector((s) => s.auth.loggedIn); // 👈 pega do Redux
@@ -30,6 +31,14 @@ function AppRoutes() {
           element={
             <PrivateRoute>
               <CrohnCDAIForm />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/pacientes"
+          element={
+            <PrivateRoute>
+              <PacientesView />
             </PrivateRoute>
           }
         />

@@ -2,6 +2,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../stores/auth/slices/authSlice";
+import patientStore from "../stores/patient";
+import PacientesView from "../views/Patients";
 
 export default function Header() {
   const user = useSelector((s) => s?.auth?.user);
@@ -36,14 +38,13 @@ export default function Header() {
   const handleLogout = () => {
     dispatch(logout());
     setOpen(false);
-    // PrivateRoute vai redirecionar automaticamente
   };
 
   return (
     <header className="bg-blue-600 text-white p-4 shadow-md">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <div className="text-xl font-bold">Nigh</div>
-
+    
         <nav className="flex items-center space-x-4">
           {!user ? (
             <div className="px-3 py-1 rounded-lg ">
@@ -58,7 +59,6 @@ export default function Header() {
                 onClick={() => setOpen((v) => !v)}
                 className="flex items-center space-x-2 hover:bg-blue-700 px-3 py-1 rounded-lg transition"
               >
-                {/* ícone de usuário */}
                 <svg
                   className="w-5 h-5 text-white"
                   viewBox="0 0 24 24"
@@ -77,7 +77,6 @@ export default function Header() {
 
                 <span className="font-medium">{user.username ?? "Usuário"}</span>
 
-                {/* chevron */}
                 <svg
                   className="w-4 h-4 text-white"
                   viewBox="0 0 20 20"

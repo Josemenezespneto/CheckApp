@@ -10,28 +10,31 @@ class ApiService {
       },
     });
 
+    this.axiosInstance.interceptors.request.use(config => {
+      const auth = localStorage.getItem('persist:root')
+      let authObj 
+      if (auth) authObj = JSON.parse(auth)
+
+      config.headers.Authorization = `Bearer ${authObj.token.replace(/"/g, '')}`
+      config.headers['clinic_id'] = 1
+
+      return config
+    }, error => {
+      return error
+    })
+
     this.axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
         if (error.response?.status === 401) {
           window.alert("Sessão expirada. Redirecionando para login...");
-          window.location.href = "/"; // não faz logout direto aqui
-          localStorage.removeItem('persist:root')
+          // window.location.href = "/"; 
+          //localStorage.removeItem('persist:root')
         }
 
         return Promise.reject(error);
       }
     );
-  }
-
-  setAuthToken(token) {
-    if (token) {
-      this.axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${token}`;
-    } else {
-      delete this.axiosInstance.defaults.headers.common["Authorization"];
-    }
   }
 
   getInstance() {

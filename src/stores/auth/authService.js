@@ -8,18 +8,30 @@ const apiService = api.getInstance()
 const authService = {
   login: async (username, password) => {
     try {
-      const response = await apiService.post("/login", { username, password });
+      const { data } = await apiService.post("/login", { username, password });
 
-      if (response.data) {
-        store.dispatch(loginSuccess(response.data));
+      if (data) {
+        store.dispatch(loginSuccess(data));
       }
 
-      return response.data;
+      return data;
     } catch (error) {
-      throw error.response?.data || { message: "Erro ao fazer login" };
+      throw error ;
     }
   },
-  
+  cpflogin: async (cpf) => {
+    try {
+      const { data } = await apiService.post("/cpf-login", {cpf})
+      if (data) {
+          store.dispatch(loginSuccess(data));
+        }
+        return data;
+    } 
+    catch (error) {
+      throw error;
+    }
+  }
+  ,
   isAuthUser: () => {
     try {    
       const response = localStorage.getItem('persist:root')
